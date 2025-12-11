@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %} hain home {% endblock %}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-..."
+      crossorigin="anonymous"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+      * {
+  margin: 0;
+  padding: 0;
+}
+
+/* NAVBAR */
+.nav {
+  height: 75px;
+  width: 100%;
+  background-color: #0D1C2E;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* keeps logo centered always */
+  position: relative;
+}
+
+.logo h1 {
+  color: #F9F9F9;
+  font-family: 'Playfair Display', 'Times New Roman', serif;
+  font-size: 50px;
+  margin: 0;
+}
+
+/* FOOTER */
+.footer {
+  background-color: #0D1C2E;
+  color: #F9F9F9;
+  text-align: center;
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  padding: 45px 18px;
+}
+.footsec-1,
+.footsec-2 {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-size: 15px;
+}
+
+/* RESPONSIVE NAV */
+@media (max-width: 768px) {
+  .logo h1 {
+    font-size: 38px;
+  }
+}
+@media (max-width: 480px) {
+  .logo h1 {
+    font-size: 32px;
+  }
+  .footsec-1, .footsec-2 {
+    font-size: 13px;
+  }
+}
+      
+    </style>
+  </head>
+  <body>
+    <div class="nav">
+      <div class="logo">
+        <h1>Momento</h1>
+      </div>
+    </div>
+
+    {% block body %}
+    <div class="my_div">ghghgh</div>
+    {% endblock %}
+
+    <div class="footer">
+      <div class="footsec-1">
+        <p>Call +01 1234567890</p>
+        <p>demo@gmail.com</p>
+      </div>
+      <div class="footsec-2">
+        <p>Copyright 2025 All Rights Reserved. Lorem ipsum dolor sit amet.</p>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-..."
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

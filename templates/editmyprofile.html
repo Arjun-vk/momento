@@ -1,0 +1,152 @@
+{% extends 'nav.html' %}
+{% block title %}My Profile{% endblock %} 
+{% block body %}
+
+<style>
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: calc(100vh - 75px - 200px);
+  padding: 80px 20px;
+  background-color: #EEEEEE;
+}
+
+.edit-prof {
+  background-color: #F9F9F9;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(13, 28, 46, 0.15);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+}
+
+.edit-prof h3 {
+  color: #0D1C2E;
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 30px;
+  font-weight: 600;
+  border-bottom: 3px solid #00A878;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.edit-prof form {
+  width: 100%;
+}
+
+.edit-prof table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 20px;
+}
+
+.edit-prof table tr td {
+  padding: 0;
+}
+
+.input-2 {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 0;
+  border: 1px solid #4A6789;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: #0D1C2E;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-2::placeholder {
+  color: #888;
+}
+
+.input-2:focus {
+  border-color: #00A878;
+  box-shadow: 0 0 0 3px rgba(0, 168, 120, 0.2);
+  outline: none;
+}
+
+.upload-box {
+  display: block;
+  width: 100%;
+  padding: 12px 15px;
+  background-color: #0D1C2E;
+  color: #F9F9F9;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s, transform 0.1s;
+  text-align: left;
+}
+
+.upload-box:hover {
+  background-color: #1a3454;
+}
+
+.upload-box input[type="file"] {
+  display: none;
+}
+
+.btn-2 {
+  width: 100%;
+  padding: 12px 15px;
+  background-color: #00A878;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  margin-top: 10px;
+}
+
+.btn-2:hover {
+  background-color: #008f65;
+  transform: translateY(-1px);
+}
+</style>
+
+<div class="content">
+  <div class="edit-prof">
+    <h3>Edit Your Profile</h3>
+
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <table>
+        <tr>
+          <td><input type="text" placeholder="Name" name="name" class="input-2" required value="{{data.name}}"/></td>
+        </tr>
+        <tr>
+          <td>
+            <input type="number" placeholder="Mobile number" name="mobile" value="{{data.mobile}}" class="input-2"
+                  required minlength="10" maxlength="10" />
+          </td>
+        </tr>
+        <tr>
+          <td><input type="email" placeholder="Email ID" name="email" value="{{data.email}}" class="input-2" required /></td>
+        </tr>
+
+        <tr>
+          <td>
+            <label class="upload-box">
+              <i class="bi bi-person-circle" style="margin-right: 10px;"></i>
+              Choose Profile Picture (optional)
+              <input type="file" name="photo" accept="image/*">
+            </label>
+          </td>
+        </tr>
+
+        <tr>
+          <td><input type="submit" value="Update Profile" name="submit" class="btn-2" /></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

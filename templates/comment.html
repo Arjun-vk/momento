@@ -1,0 +1,110 @@
+{% extends 'nav.html' %}
+{% block title %}My Friends{% endblock %}
+{% block body %}
+<style>
+.input-1 {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: white;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    box-sizing: border-box; 
+    display: flex; 
+    gap: 10px;
+    z-index: 999; 
+}
+
+.input-1 input[type="text"] {
+    flex-grow: 1; 
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.input-1 input[type="submit"] {
+    padding: 10px 15px;
+ 
+}
+
+
+.content {
+    min-height: 100vh;
+    padding-bottom: 70px; 
+}
+.content{
+        height: 100vh;
+    }
+
+    .cmt-1{
+        background-color: white;
+        height: 140px;
+        border: 1px solid #0D1C2E;
+    }
+
+    .cmt-prof{
+        display: flex;
+        gap: 20px;
+    }
+
+    .cmt-prof img{
+        border-radius: 190px;
+        height: 55px;
+        width: 60px;
+    }
+
+    .cmt-prof p{
+        padding-top: 18px;
+        font-weight: bolder;
+
+    }
+
+    .cmt-txt{
+        margin-left: 77px;
+    }
+
+    .input-1{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+    }
+</style>
+
+<div class="content">
+    <div class="cmt">
+        <table>
+            {% for i in data %}
+                <div class="cmt-1">
+                    <div class="cmt-prof">
+                        <img src="{{i.USER.photo.url}}" alt="" width="100px">
+                        <p>{{i.USER.name}}</p>
+                    </div>
+                    <div class="cmt-txt">
+                        <p>{{i.Comment}}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </table>
+    </div>
+
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="input-1">
+            <input type="text" placeholder="Comment" name="comment">
+            <input type="submit" value="Send" name="submit" class="btn-2">
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+{% endblock %}

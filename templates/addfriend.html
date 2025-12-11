@@ -1,0 +1,194 @@
+{% extends 'nav.html' %}
+{% block title %}Add Friends{% endblock %}
+{% block body %}
+
+<style>
+
+  /* ---------- PAGE WRAPPER ---------- */
+  .main-content-wrapper {
+    min-height: calc(100vh - 275px); /* removes footer gap */
+  }
+
+  .main-content-wrapper h1 {
+    text-align: center;
+    margin: 20px 0 30px 0;
+    font-family: "DM Serif Display", serif;
+    font-weight: 500;
+    letter-spacing: 2px;
+  }
+
+  .content {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px;
+  }
+
+  /* ---------- FRIEND CARD ---------- */
+  .friend {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #fcfcfc;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border-radius: 10px;
+    gap: 15px;
+  }
+
+  /* ---------- PROFILE PIC ---------- */
+  .dp img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #00a878;
+  }
+
+  /* ---------- NAME ---------- */
+  .name p {
+    font-family: math;
+    letter-spacing: 3px;
+    font-size: 1.15em;
+    font-weight: 600;
+    margin: 0;
+    color: #333;
+  }
+
+  /* ---------- STATUS & BUTTON WRAPPER ---------- */
+  .action {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  /* ---------- BUTTON STYLE ---------- */
+  .btn-follow,
+  .btn-again {
+    width: 130px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    transition: .25s;
+  }
+
+  .btn-follow { background: #00a878; }
+  .btn-follow:hover { background: #00885f; }
+
+  .btn-again { background: #f24b0e; }
+  .btn-again:hover { background: #c23602; }
+
+  .btn-follow a,
+  .btn-again a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    line-height: 40px;
+  }
+
+  /* ---------- STATUS TEXT ---------- */
+  .pending span { color: #ff9800; font-weight: 600; }
+  .friends-2 span { color: #4caf50; font-weight: 600; }
+
+  /* ---------------------------------------------------
+        RESPONSIVE DESIGN (Tablet + Mobile)
+  --------------------------------------------------- */
+
+  @media (max-width: 768px) {
+
+    .friend {
+      flex-wrap: wrap;
+      padding: 15px;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .dp img {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 5px;
+    }
+
+    .name p {
+      width: 100%;
+      font-size: 1.05em;
+      letter-spacing: 2px;
+    }
+
+    .action {
+      margin: 0;
+      width: 100%;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .btn-follow,
+    .btn-again {
+      width: 80%;
+      max-width: 260px;
+    }
+
+  }
+
+  /* ---------- SMALL MOBILE SCREENS ---------- */
+  @media (max-width: 480px) {
+
+    .dp img {
+      width: 55px;
+      height: 55px;
+    }
+
+    .btn-follow,
+    .btn-again {
+      width: 100%;
+      height: 42px;
+      font-size: 15px;
+    }
+  }
+
+</style>
+
+<div class="main-content-wrapper">
+  <h1>Discover Friends</h1>
+
+  <div class="content">
+    {% for i in data %}
+    <div class="friend">
+
+      <!-- Profile Photo -->
+      {% if i.user.photo %}
+        <div class="dp"><img src="{{ i.user.photo.url }}"></div>
+      {% else %}
+        <div class="dp"><img src="/media/images/default profile.png"></div>
+      {% endif %}
+
+      <div class="name"><p>{{ i.user.name }}</p></div>
+
+      <!-- Action Buttons / Status -->
+      <div class="action">
+
+        {% if i.status == "Pending" %}
+          <div class="pending"><span>Request Pending</span></div>
+
+        {% elif i.status == "Declined" %}
+          <button class="btn-again"><a href="/follow/{{ i.user.id }}">Follow Again</a></button>
+
+        {% elif i.status == "Friends" %}
+          <div class="friends-2"><span>Friends</span></div>
+
+        {% else %}
+          <button class="btn-follow"><a href="/follow/{{ i.user.id }}">Follow</a></button>
+
+        {% endif %}
+      </div>
+
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

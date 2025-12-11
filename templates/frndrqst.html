@@ -1,0 +1,214 @@
+{% extends 'nav.html' %} 
+{% block title %}Friend Request{% endblock %} 
+{% block body %}
+<style>
+  /*
+  * Note: CSS variables defined in nav.html are used here for color consistency.
+  */
+  :root {
+    --primary-color: #0d1c2e;
+    --secondary-color: #00a878;
+    --card-bg: #f9f9f9;
+    --danger-color: #e63946;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px; 
+    padding: 40px 15px; 
+    flex-grow: 1; 
+  }
+
+  .content h1 {
+    text-align: center;
+    margin: 0 0 10px 0; 
+    font-family: "DM Serif Display", serif;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: var(--primary-color);
+    font-size: clamp(2rem, 5vw, 2.5rem); 
+    letter-spacing: 6px;
+  }
+
+  /* EMPTY STATE STYLING */
+  .empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: var(--card-bg);
+    border: 2px dashed #ccc;
+    border-radius: 12px;
+    max-width: 450px;
+    margin-top: 50px;
+  }
+  .empty-state i {
+    font-size: 3rem;
+    color: #a0a0a0;
+    margin-bottom: 15px;
+  }
+  .empty-state p {
+    font-size: 1.1rem;
+    color: #555;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  /* REQUEST CARD STYLING */
+  .rqst-card {
+    width: 100%; 
+    max-width: 350px; 
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--card-bg);
+    border-radius: 15px; 
+    border: 2px solid transparent;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  @media (min-width: 768px) {
+    .content {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+    .content h1 {
+        width: 100%; 
+        margin-bottom: 30px;
+    }
+    .empty-state {
+        margin-top: 0;
+    }
+  }
+
+  .rqst-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--secondary-color);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+  }
+
+  .rqst-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-top: 0;
+    object-fit: cover;
+    border: 3px solid var(--secondary-color);
+    flex-shrink: 0;
+  }
+
+  .s-name {
+    margin-top: 5px;
+  }
+
+  .s-name p {
+    font-size: 24px; 
+    font-weight: 700;
+    font-family: "Roboto", sans-serif;
+    letter-spacing: 1px;
+    margin: 0;
+    color: var(--primary-color);
+  }
+
+  .text p {
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "Roboto", sans-serif;
+    margin-bottom: 15px;
+    color: #555;
+  }
+
+  .flw-btn {
+    display: flex;
+    gap: 40px; 
+    width: 100%;
+    justify-content: center;
+  }
+
+  .accept button,
+  .decline button {
+    width: 90px; 
+    height: 38px;
+    border: none;
+    border-radius: 20px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .accept button {
+    background: var(--secondary-color);
+  }
+
+  .decline button {
+    background: var(--danger-color);
+  }
+
+  .accept button a,
+  .decline button a {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    font-family: "Roboto", sans-serif;
+    display: block;
+    line-height: 38px;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .accept button:hover {
+    background-color: #00885f;
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .decline button:hover {
+    background: #c51d2d;
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+</style>
+<div class="content">
+  <h1>Friend Requests</h1>
+  
+  {% if data %}
+    {% for i in data %}
+    <div class="rqst-card">
+      {% if i.SENDER.photo %}
+      <img src="{{i.SENDER.photo.url}}" alt="{{ i.SENDER.name }}'s profile picture" loading="lazy" />
+      {% else %}
+      <img src="/media/images/default profile.png" alt="Default profile picture" loading="lazy" />
+      {% endif %}
+      <div class="s-name"><p>{{i.SENDER.name}}</p></div>
+      <div class="text"><p>Send you a Follow Request</p></div>
+      <div class="flw-btn">
+        <div class="accept">
+          <button>
+            <a href="/followback/{{i.id}}">Accept</a>
+          </button>
+        </div>
+
+        <div class="decline">
+          <button>
+            <a href="/declinerqst/{{i.id}}">Decline</a>
+          </button>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="empty-state">
+        <i class="fa-solid fa-user-check"></i>
+        <p>You currently have no new friend requests.</p>
+        <p>Check back later!</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

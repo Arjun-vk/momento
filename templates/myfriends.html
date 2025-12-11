@@ -1,0 +1,174 @@
+{% extends 'nav.html' %}
+{% block title %}My Friends{% endblock %} 
+{% block body %}
+<style>
+  :root {
+    --primary-color: #0d1c2e;
+    --secondary-color: #00a878;
+    --background-color: #eeeeee;
+    --card-bg: #f9f9f9;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px; 
+    padding: 30px 15px; 
+    flex-grow: 1;
+  }
+  
+  .content h1 {
+    margin: 10px 0 20px 0;
+    font-family: "DM Serif Display", serif;
+    font-weight: 500;
+    letter-spacing: 6px;
+    color: var(--primary-color);
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    text-align: center;
+    width: 100%;
+  }
+
+  /* FRIEND ITEM STYLING */
+  .friends {
+    display: flex;
+    width: 100%;
+    max-width: 650px; 
+    align-items: center;
+    border-radius: 10px;
+    padding: 15px 25px;
+    background-color: var(--card-bg);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    justify-content: space-between; 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .friends:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .friend-info {
+    display: flex;
+    align-items: center;
+    flex-grow: 1; 
+    gap: 15px;
+    min-width: 0; 
+  }
+
+  .dp img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--secondary-color);
+    flex-shrink: 0; 
+  }
+
+  .name p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.15em;
+    font-weight: 600; 
+    margin: 0;
+    color: var(--primary-color);
+    letter-spacing: 0.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+  }
+
+  /* MESSAGE BUTTON */
+  .butn button {
+    background-color: var(--secondary-color);
+    border: none;
+    border-radius: 6px; 
+    width: 100px; 
+    height: 40px; 
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    flex-shrink: 0; 
+  }
+
+  .butn button a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    display: block;
+    line-height: 40px;
+  }
+
+  .butn button:hover {
+    background-color: #00885f;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  /* EMPTY STATE STYLING */
+  .empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: var(--card-bg);
+    border: 2px dashed #ccc;
+    border-radius: 12px;
+    max-width: 400px;
+    margin-top: 20px;
+  }
+  .empty-state i {
+    font-size: 3rem;
+    color: #a0a0a0;
+    margin-bottom: 15px;
+  }
+  .empty-state p {
+    font-size: 1.1rem;
+    color: #555;
+    font-weight: 500;
+    margin: 0;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 480px) {
+    .friends {
+      padding: 10px 15px;
+    }
+    .dp img {
+      width: 45px;
+      height: 45px;
+    }
+    .name p {
+      font-size: 1em;
+    }
+    .butn button {
+      width: 80px; 
+      height: 35px;
+      font-size: 14px;
+    }
+    .butn button a {
+      line-height: 35px;
+    }
+  }
+
+</style>
+<div class="content">
+  <h1>Your Connections</h1>
+    {% for friend in friends %}
+      <div class="friends">
+        <div class="friend-info">
+          {% if friend.photo %}
+            <div class="dp"><img src="{{ friend.photo.url }}" alt="{{ friend.name }}'s profile picture" loading="lazy" /></div>
+          {% else %}
+            <div class="dp"><img src="/media/images/default profile.png" alt="Default profile picture" loading="lazy" /></div>
+          {% endif %}
+          <div class="name"><p>{{ friend.name }}</p></div>
+        </div>
+        <div class="butn"><button><a href="/message/{{friend.id}}">Message</a></button></div>
+      </div>
+    {% empty %}
+      <div class="empty-state">
+        <i class="fa-solid fa-user-group-slash"></i>
+        <p>You haven't connected with anyone yet.</p>
+        <p>Go to Add Friend to expand your network!</p>
+      </div>
+    {% endfor %}
+</div>
+{% endblock %}

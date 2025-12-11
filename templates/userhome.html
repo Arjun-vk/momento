@@ -1,0 +1,414 @@
+{% extends 'nav.html' %}
+
+{% block title %}User Home{% endblock %}
+
+{% block body %}
+
+<style>
+
+  /*
+
+  * Note: The base body styles (min-height, padding-top, font-family, background)
+
+  * are handled in nav.html's <style> block, ensuring consistency.
+
+  */
+
+
+
+  .content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 40px;
+
+    background-color: var(--background-color);
+
+    padding: 40px 15px;
+
+  }
+
+
+
+  .content h1 {
+
+    font-family: "DM Serif Display", serif;
+
+    font-weight: 400;
+
+    color: var(--dark-text-color);
+
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+
+    margin-top: 0;
+
+    text-align: center;
+
+    letter-spacing: 5px;
+
+
+  }
+
+
+
+  .card {
+
+    width: 100%;
+
+    max-width: 650px;
+
+    border-radius: 12px;
+
+    background-color: var(--card-bg);
+
+    border: none;
+
+    overflow: hidden;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  }
+
+
+
+  .card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+
+  }
+
+
+
+  .post-head {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    height: 70px;
+
+    padding: 0 20px;
+
+    background: var(--card-bg);
+
+    border-bottom: 1px solid rgba(13, 28, 46, 0.1);
+
+  }
+
+
+
+  .post-head img {
+
+    width: 48px;
+
+    height: 48px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border: 3px solid var(--secondary-color);
+
+    flex-shrink: 0;
+
+  }
+
+
+
+  .post-head h4 {
+
+    font-weight: 700;
+
+    color: var(--dark-text-color);
+
+    font-size: 1rem;
+
+    margin: 0;
+
+    letter-spacing: 1px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+  }
+
+ 
+
+  .card-img-top-container {
+
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 4 / 3;
+
+    background: #d8d8d8;
+
+    overflow: hidden;
+
+  }
+
+
+
+  .card-img-top {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    filter: blur(15px);
+
+    opacity: 0.5;
+
+    transition: filter 0.6s ease, opacity 0.6s ease;
+
+  }
+
+
+
+  .card-img-top.loaded {
+
+    filter: blur(0);
+
+    opacity: 1;
+
+  }
+
+
+
+  .card-body {
+
+    padding: 20px 25px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+  }
+
+
+
+  .text-1 {
+
+    border-bottom: 1px solid var(--border-color);
+
+    padding-bottom: 15px;
+
+  }
+
+
+
+  .card-text {
+
+    font-size: 16px;
+
+    color: var(--dark-text-color);
+
+    line-height: 1.55;
+
+    margin-bottom: 8px;
+
+  }
+
+
+
+  .text-body-secondary {
+
+    font-size: 13px;
+
+    color: #4a6789 !important;
+
+    display: block;
+
+    margin-top: 5px;
+
+  }
+
+
+
+  .text-2 {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 30px;
+
+  }
+
+
+
+  .text-2 a {
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    color: var(--dark-text-color);
+
+    padding: 5px 0;
+
+    position: relative;
+
+    transition: color 0.2s ease;
+
+  }
+
+
+
+  .text-2 a:hover {
+
+    color: var(--secondary-color);
+
+  }
+
+
+
+  .text-2 p {
+
+    margin: 0;
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+    color: #3e566b;
+
+  }
+
+</style>
+
+
+
+<div class="content">
+
+  <h1>Catch Up on the Feeds</h1>
+
+
+
+  {% for i in data %}
+
+  <div class="card">
+
+    <div class="post-head">
+
+      {% if i.USER.photo %}
+
+      <img src="{{i.USER.photo.url}}" alt="{{ i.USER.name }}'s profile picture" loading="lazy" />
+
+      {% else %}
+
+      <img src="/media/images/default profile.png" alt="Default profile picture" loading="lazy" />
+
+      {% endif %}
+
+      <h4>{{i.USER.name}}</h4>
+
+    </div>
+
+
+
+    <div class="card-img-top-container">
+
+      <img
+
+        src="{{ i.image.url }}"
+
+        class="card-img-top"
+
+        alt="Post by {{i.USER.name}}"
+
+        data-src="{{ i.image.url }}"
+
+      />
+
+    </div>
+
+
+
+    <div class="card-body">
+
+      <div class="text-1">
+
+        <p class="card-text">{{i.description}}.</p>
+
+        <p class="card-text">
+
+          <small class="text-body-secondary">{{i.date_time}}</small>
+
+        </p>
+
+      </div>
+
+      <div class="text-2">
+
+        <a href="/like/{{i.id}}">LIKE</a>
+
+        <p>{{ i.likes.count }} Likes</p>
+
+        <a href="/comment/{{i.id}}">Comment</a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  {% endfor %}
+
+</div>
+
+
+
+<script>
+
+  document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".card-img-top").forEach((img) => {
+
+      if (img.complete) {
+
+        img.classList.add("loaded");
+
+      } else {
+
+        img.addEventListener("load", () => {
+
+          img.classList.add("loaded");
+
+        });
+
+        img.addEventListener("error", () => {
+
+          console.error("Image failed to load: " + img.src);
+
+        });
+
+      }
+
+    });
+
+  });
+
+</script>
+
+{% endblock %}

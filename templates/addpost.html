@@ -1,0 +1,104 @@
+{% extends 'nav.html' %}
+{% block title %}Add Post{% endblock %}
+{% block body %}
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    min-height: 100vh;
+    padding-top: 75px;
+    background: #eeeeee;
+    font-family: "Roboto", sans-serif;
+  }
+
+  .content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+  }
+
+  .post-form-card {
+    width: 480px;
+    background: #ffffff;
+    padding: 35px 35px 45px;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+    border: 1px solid #dcdcdc;
+    text-align: center;
+  }
+
+  .post-form-card h2 {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    font-family: "DM Serif Display", serif;
+    color: #0d1c2e;
+    letter-spacing: 4px;
+  }
+
+  .post-input {
+    width: 100%;
+    padding: 12px 18px;
+    margin: 12px 0 22px;
+    border-radius: 8px;
+    border: 1.6px solid #bfcbd6;
+    font-size: 16px;
+    transition: border 0.25s;
+  }
+  .post-input:focus {
+    outline: none;
+    border-color: #00a878;
+  }
+
+  .file-input {
+    border: none;
+    padding: 8px 0;
+  }
+
+  textarea.post-input {
+    height: 130px;
+    resize: none;
+  }
+
+  .btn-post {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    background: #00a878;
+    color: white;
+    transition: background 0.25s;
+    margin-top: 5px;
+  }
+  .btn-post:hover {
+    background: #00885f;
+  }
+</style>
+
+<div class="content">
+  <div class="post-form-card">
+    <h2>Add New Post</h2>
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <input type="file" name="image" class="post-input file-input" required />
+
+      <textarea
+        class="post-input"
+        name="description"
+        placeholder="Write a caption..."
+        required
+      ></textarea>
+
+      <input type="submit" value="Post" class="btn-post" />
+    </form>
+  </div>
+</div>
+{% endblock %}

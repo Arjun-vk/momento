@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% block title %}My Friends{% endblock %} 
+{% block body %}
+<style>
+  .content {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #F9F9F9;
+  padding: 15px;
+}
+
+/* CARD */
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 380px;
+  background-color: #0D1C2E;
+  border-radius: 32px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+  padding: 25px 0 30px;
+  border: 1px solid #0D1C2E;
+  transition: 0.25s;
+}
+.register:hover {
+  transform: scale(1.04);
+}
+
+.register h3 {
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 24px;
+  font-family: 'Roboto';
+  text-decoration: underline;
+  color: white;
+}
+
+/* FORM */
+table {
+  width: 90%;
+}
+table tr {
+  display: flex;
+  justify-content: center;
+}
+
+/* INPUT */
+.register table tr td input {
+  margin: 7px;
+  width: 240px;
+  height: 42px;
+}
+
+.input-2 {
+  border-radius: 10px;
+  border: 1px solid #909090;
+  padding-left: 8px;
+}
+.input-2:focus {
+  border: 2px solid #1ca3c6;
+  outline: none;
+}
+
+/* UPLOAD INPUT */
+.upload-box {
+  background-color: #dff7ff;
+  border: 2px dashed teal;
+  padding: 12px;
+  border-radius: 15px;
+  text-align: center;
+  width: 240px;
+  cursor: pointer;
+  transition: .25s;
+  font-size: 14px;
+  font-weight: bold;
+  color: #004c5c;
+}
+.upload-box:hover {
+  background-color: #c4f2fe;
+  transform: scale(1.05);
+}
+.upload-box input {
+  display: none;
+}
+
+/* BUTTON */
+.btn-2 {
+  border-radius: 20px;
+  font-size: larger;
+  font-weight: bold;
+  font-family: math;
+  transition: 0.25s;
+  height: 60px;
+  background-color: #00C896;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.btn-2:hover {
+  background-color: #00A878;
+  transform: scale(1.08);
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .register {
+    width: 92%;
+    padding: 20px 0;
+  }
+  table {
+    width: 100%;
+  }
+  .register table tr td input,
+  .upload-box {
+    width: 90%;
+  }
+  .btn-2 {
+    width: 90%;
+  }
+}
+</style>
+<div class="content">
+  <div class="register">
+    <h3>Register Now</h3>
+
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <table>
+        <tr>
+          <td><input type="text" placeholder="Name" name="name" class="input-2" required /></td>
+        </tr>
+        <tr>
+          <td>
+            <input type="number" placeholder="Mobile number" name="mobile" class="input-2"
+                   required minlength="10" maxlength="10" />
+          </td>
+        </tr>
+        <tr>
+          <td><input type="email" placeholder="Email ID" name="email" class="input-2" required /></td>
+        </tr>
+
+        <tr>
+          <td>
+            <label class="upload-box">
+              Upload Profile Picture (optional)
+              <input type="file" name="photo" accept="image/*">
+            </label>
+          </td>
+        </tr>
+
+        <tr>
+          <td><input type="text" placeholder="Username" name="username" class="input-2" required /></td>
+        </tr>
+        <tr>
+          <td>
+            <input type="password" placeholder="Password" name="password" class="input-2" required />
+          </td>
+        </tr>
+        <tr>
+          <td><input type="submit" value="Register" name="submit" class="btn-2" /></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</div>
+{% endblock %}
